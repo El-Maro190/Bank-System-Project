@@ -7,13 +7,7 @@ void Employee::addClient(Client client) {
 }
 
 Client* Employee::searchClient(int id) {
-	vector <Client> clients = FilesHelper::getClients();
-	for (size_t i = 0; i < clients.size(); i++) {
-		if (clients[i].getId() == id) {
-			return new Client(clients[i]);
-		}
-	}
-	return nullptr;
+	return FileManager::getClient(id);
 }
 
 void Employee::listClients() {

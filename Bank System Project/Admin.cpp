@@ -7,13 +7,7 @@ void Admin::addEmployee(Employee employee) {
 }
 
 Employee* Admin::searchEmployee(int id) {
-	vector <Employee> employees = FilesHelper::getEmployees();
-	for (size_t i = 0; i < employees.size(); i++) {
-		if (employees[i].getId() == id) {
-			return new Employee(employees[i]);
-		}
-	}
-	return nullptr;
+	return FileManager::getEmployee(id);
 }
 
 void Admin::listEmployees() {

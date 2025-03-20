@@ -54,8 +54,8 @@ public:
         file.close();
     }
 
-    static vector<Client> getClients() {
-        vector<Client> clients;
+    static vector<Client>* getClients() {
+        vector<Client>* clients = nullptr;
         ifstream file("ClientData.txt");
 
         if (!file) {
@@ -67,7 +67,7 @@ public:
         while (getline(file, line)) {
             Client* client = Parser::ParseToClient(line);
             if (client) {
-                clients.push_back(*client);
+                clients->push_back(*client);
                 delete client;
             }
         }
@@ -75,8 +75,8 @@ public:
         return clients;
     }
 
-    static vector<Employee> getEmployees() {
-        vector<Employee> employees;
+    static vector<Employee>* getEmployees() {
+        vector<Employee>* employees = nullptr;
         ifstream file("EmployeeData.txt");
 
         if (!file) {
@@ -88,7 +88,7 @@ public:
         while (getline(file, line)) {
             Employee* employee = Parser::ParseToEmployee(line);
             if (employee) {
-                employees.push_back(*employee);
+                employees->push_back(*employee);
                 delete employee;
             }
         }
@@ -96,8 +96,8 @@ public:
         return employees;
     }
 
-    static vector<Admin> getAdmins() {
-        vector<Admin> admins;
+    static vector<Admin>* getAdmins() {
+        vector<Admin>* admins = nullptr;
         ifstream file("AdminData.txt");
 
         if (!file) {
@@ -109,7 +109,7 @@ public:
         while (getline(file, line)) {
             Admin* admin = Parser::ParseToAdmin(line);
             if (admin) {
-                admins.push_back(*admin);
+                admins->push_back(*admin);
                 delete admin;
             }
         }
