@@ -76,16 +76,16 @@ public:
 		}
 		return nullptr;
 	}
-    static Admin* getAdmin(int id) {
-        vector<Admin> admins = FilesHelper::getAdmins();
-        for (int i = 0; i < admins.size(); i++) {
-            if (admins[i].getId() == id) {
-                Admin* admin = new Admin(admins[i]);
-                return admin;
-            }
-        }
-        return nullptr;
-    }
+	static Admin* getAdmin(int id) {
+		vector<Admin> admins = FilesHelper::getAdmins();
+		for (int i = 0; i < admins.size(); i++) {
+			if (admins[i].getId() == id) {
+				Admin* admin = new Admin(admins[i]);
+				return admin;
+			}
+		}
+		return nullptr;
+	}
 
 	static void updatePassword(Person* person) {
 		if (!person) {
@@ -103,21 +103,21 @@ public:
 		}
 	}
 
-    static void updateClientPassword(int clientId, string newPassword) {
-        vector<Client> clients = FilesHelper::getClients();
-        for (int i = 0; i < clients.size(); i++) {
-            if (clients[i].getId() == clientId) {
-                clients[i].setPassword(newPassword);
-                break;
-            }
-        }
-        ofstream file("ClientData.txt", ios::trunc);
-        for (int i = 0; i < clients.size(); i++) {
-            file << clients[i].toString() << endl;
-        }
-        file.close();
-    }
-    static void updateEmployeePassword(int employeeId, string newPassword) {
+	static void updateClientPassword(int clientId, string newPassword) {
+		vector<Client> clients = FilesHelper::getClients();
+		for (int i = 0; i < clients.size(); i++) {
+			if (clients[i].getId() == clientId) {
+				clients[i].setPassword(newPassword);
+				break;
+			}
+		}
+		ofstream file("ClientData.txt", ios::trunc);
+		for (int i = 0; i < clients.size(); i++) {
+			file << clients[i].toString() << endl;
+		}
+		file.close();
+	}
+	static void updateEmployeePassword(int employeeId, string newPassword) {
 		vector<Employee> employees = FilesHelper::getEmployees();
 		for (int i = 0; i < employees.size(); i++) {
 			if (employees[i].getId() == employeeId) {
@@ -130,21 +130,21 @@ public:
 			file << employees[i].toString() << endl;
 		}
 		file.close();
-    }
-    static void updateAdminPassword(int adminId, string newPassword) {
-        vector<Admin> admins = FilesHelper::getAdmins();
-        for (int i = 0; i < admins.size(); i++) {
+	}
+	static void updateAdminPassword(int adminId, string newPassword) {
+		vector<Admin> admins = FilesHelper::getAdmins();
+		for (int i = 0; i < admins.size(); i++) {
 			if (admins[i].getId() == adminId) {
-                admins[i].setPassword(newPassword);
-                break;
-            }
-        }
-        ofstream file("AdminData.txt", ios::trunc);
-        for (int i = 0; i < admins.size(); i++) {
-            file << admins[i].toString() << endl;
-        }
-        file.close();
-    }
+				admins[i].setPassword(newPassword);
+				break;
+			}
+		}
+		ofstream file("AdminData.txt", ios::trunc);
+		for (int i = 0; i < admins.size(); i++) {
+			file << admins[i].toString() << endl;
+		}
+		file.close();
+	}
 
 	static void updatePerson(Person* person) {
 		if (!person) {
@@ -208,6 +208,77 @@ public:
 			file << admins[i].toString() << endl;
 		}
 		file.close();
+	}
+
+	static void depositToClient(int clientId, double amount) {
+		vector<Client> clients = FilesHelper::getClients();
+		bool isUpdated = false;
+		for (int i = 0; i < clients.size(); i++) {
+			if (clients[i].getId() == clientId) {
+				if (clients[i].deposit(amount))
+				{
+					isUpdated = true;
+				}
+				break;
+			}
+		}
+		if (isUpdated) {
+			ofstream file("ClientData.txt", ios::trunc);
+			for (int i = 0; i < clients.size(); i++) {
+				file << clients[i].toString() << endl;
+			}
+			file.close();
+		}
+	}
+	static void withdrawFromClient(int clientId, double amount) {
+		vector<Client> clients = FilesHelper::getClients();
+		bool isUpdated = false;
+		for (int i = 0; i < clients.size(); i++) {
+			if (clients[i].getId() == clientId) {
+				if (clients[i].withdraw(amount))
+				{
+					isUpdated = true;
+				}
+				break;
+			}
+		}
+		if (isUpdated) {
+			ofstream file("ClientData.txt", ios::trunc);
+			for (int i = 0; i < clients.size(); i++) {
+				file << clients[i].toString() << endl;
+			}
+			file.close();
+		}
+	}
+	static void transferToClient(int clientId, double amount, Client* recipient) {
+		vector<Client> clients = FilesHelper::getClients();
+		bool isUpdated = false;
+		Client* senderClient = nullptr;
+		Client* recipientClient = nullptr;
+
+		for (int i = 0; i < clients.size(); i++) {
+			if (clients[i].getId() == clientId) {
+				senderClient = &clients[i];
+			}
+			if (clients[i].getId() == recipient->getId()) {
+				recipientClient = &clients[i];
+			}
+		}
+
+		if (senderClient->transferTo(amount, recipientClient))
+		{
+			isUpdated = true;
+		}
+		else {
+			cout << "Error: Transfer failed";
+		}
+		if (isUpdated) {
+			ofstream file("ClientData.txt", ios::trunc);
+			for (int i = 0; i < clients.size(); i++) {
+				file << clients[i].toString() << endl;
+			}
+			file.close();
+		}
 	}
 
 	static void removeAllClients() {

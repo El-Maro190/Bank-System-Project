@@ -18,25 +18,47 @@ public:
 		cout << "Enter the amount you want to deposit: ";
 		double amount;
 		cin >> amount;
-		client->deposit(amount);
+		if (client->deposit(amount))
+		{
+			FileManager::depositToClient(client->getId(), amount);
+			cout << "Amount deposited successfully" << "\n";
+		}
+		else {
+			cout << "Invalid amount" << "\n";
+
+		}
 	}
 
 	static void withdraw(Client* client) {
 		cout << "Enter the amount you want to withdraw: ";
 		double amount;
 		cin >> amount;
-		client->withdraw(amount);
+		if (client->withdraw(amount))
+		{
+			FileManager::withdrawFromClient(client->getId(), amount);
+			cout << "Amount withdrawn successfully" << "\n";
+		}
+		else {
+			cout << "Invalid amount" << "\n";
+		}
 	}
 
 	static void transfer(Client* client) {
-		cout << "Enter the amount you want to transfer: ";
-		double num;
-		cin >> num;
 		cout << "Enter the id of the recipient: ";
 		int id;
 		cin >> id;
+		cout << "Enter the amount you want to transfer: ";
+		double num;
+		cin >> num;
 		Client* recipient = FileManager::getClient(id);
-		client->transferTo(num, *recipient);
+		if (recipient != nullptr && client->transferTo(num, recipient))
+		{
+			FileManager::transferToClient(client->getId(), num, recipient);
+			cout << "Amount transferred successfully" << "\n";
+		}
+		else {
+			cout << "Invalid amount or recipient" << "\n";
+		}
 	}
 
 	static void updatePassword(Person* person) {

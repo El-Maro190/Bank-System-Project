@@ -23,25 +23,42 @@ public:
 		return this->balance;
 	}
 
-	void deposit(double amount) {
-		balance += amount;
-	}
-	void withdraw(double amount) {
-		if (amount <= balance) {
-			balance -= amount;
+	bool deposit(double amount) {
+		if (amount > 0) {
+			balance += amount;
+			return true;
 		}
 		else {
-			cout << "Amount exceeded balance" << "\n";
+			return false;
 		}
 	}
-	void transferTo(double amount, Client& recipient) {
-		if (amount <= balance) {
+	bool withdraw(double amount) {
+		if (amount > 0 && amount <= balance) {
 			balance -= amount;
-			recipient.deposit(amount);
+			return true;
 		}
 		else {
-			cout << "Amount exceeded balance" << "\n";
+			return false;
 		}
+	}
+	bool transferTo(double amount, Client* recipient) {
+		if (recipient == nullptr) {
+			cout << "Error: Recipient does not exist.\n";
+			return false;
+		}
+		if (amount > 0 && amount <= balance) {
+			if (withdraw(amount)) {
+				if (recipient->deposit(amount))
+				{
+					return true;
+				}
+				else {
+					deposit(amount);
+					return false;
+				}
+			}
+		}
+		return false;
 	}
 	void checkBalance() {
 		cout << "Check Balance = " << balance << "\n";
