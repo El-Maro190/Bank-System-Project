@@ -22,10 +22,11 @@ public:
 		double balance;
 		cout << "Enter id: ";
 		cin >> id;
+		cin.ignore();
 		cout << "Enter name: ";
-		cin >> name;
+		getline(cin, name);
 		cout << "Enter password: ";
-		cin >> password;
+		getline(cin, password);
 		cout << "Enter balance: ";
 		cin >> balance;
 		Client client(id, name, password, balance);
@@ -36,12 +37,17 @@ public:
 		employee->listClients();
 	}
 
-	static void searchForClient(Employee* employee) {
-		int id;
-		cout << "Enter the id of the client: ";
-		cin >> id;
-		employee->searchClient(id);
-	}
+    static void searchForClient(Employee* employee) {
+        int id;
+        cout << "Enter the id of the client: ";
+        cin >> id;
+        Client* client = employee->searchClient(id);
+        if (client != nullptr) {
+            client->display();
+        } else {
+            cout << "Client not found" << endl;
+        }
+    }
 
 	static void editClientInfo(Employee* employee) {
 		int id;
@@ -50,10 +56,11 @@ public:
 		double balance;
 		cout << "Enter the id of the client: ";
 		cin >> id;
+		cin.ignore();
 		cout << "Enter the new name: ";
-		cin >> name;
+		getline(cin, name);
 		cout << "Enter the new password: ";
-		cin >> password;
+		getline(cin, password);
 		cout << "Enter the new balance: ";
 		cin >> balance;
 		employee->editClient(id, name, password, balance);
@@ -78,9 +85,18 @@ public:
 		}
 	}
 
-	static bool employeeOptions() {
+	static void Register(Employee* employee) {
+		if (employee != nullptr) {
+			FileManager::addEmployee(*employee);
+			cout << "Employee registered successfully" << endl;
+		}
+		else {
+			cout << "Error: Employee not registered" << endl;
+		}
+	}
+
+	static bool employeeOptions(Employee* employee) {
 		int c;
-		Employee* employee = nullptr;
 		do {
 			printEmployeeMenu();
 			cin >> c;

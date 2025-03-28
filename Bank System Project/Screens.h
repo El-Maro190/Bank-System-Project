@@ -4,6 +4,8 @@
 #include "EmployeeManager.h"
 #include "AdminManager.h"
 
+using namespace std;
+
 class Screens
 {
 public:
@@ -42,8 +44,117 @@ public:
 		cout << "You have been logged out." << endl;
 	}
 
-	static void exit() {
+	static void quit() {
 		cout << "Thank you for using Summit Financial Bank." << endl;
+		exit(0);
+	}
+
+	static void invalidLogin() {
+		cout << "Error: incorrect password or id" << "\n";
+	}
+
+	static void invalidRegister() {
+		cout << "Error: invalid password or id" << "\n";
+	}
+
+	static void loginAdmin() {
+		cout << "Enter your id: ";
+		int id;
+		cin >> id;
+		cin.ignore();
+
+		cout << "Enter your password: ";
+		string password;
+		getline(cin, password);
+
+		Admin* admin = AdminManager::login(id, password);
+		if (admin != nullptr) {
+			AdminManager::AdminOptions(admin);
+		}
+		else {
+			invalidLogin();
+		}
+	}
+	static void loginEmployee() {
+		cout << "Enter your id: ";
+		int id;
+		cin >> id;
+		cin.ignore();
+		cout << "Enter your password: ";
+		string password;
+		getline(cin, password);
+		Employee* employee = EmployeeManager::login(id, password);
+		if (employee != nullptr) {
+			EmployeeManager::employeeOptions(employee);
+		}
+		else {
+			invalidLogin();
+		}
+	}
+	static void loginClient() {
+		cout << "Enter your id: ";
+		int id;
+		cin >> id;
+		cin.ignore();
+		cout << "Enter your password: ";
+		string password;
+		getline(cin, password);
+		Client* client = ClientManager::login(id, password);
+		if (client != nullptr) {
+			ClientManager::clientOptions(client);
+		}
+		else {
+			invalidLogin();
+		}
+	}
+
+	static void registerAdmin() {
+		int id;
+		id = FilesHelper::getLast("AdminLastID.txt") + 1;
+		cin.ignore();
+		cout << "Enter your name: ";
+		string name;
+		getline(cin, name);
+		cout << "Enter your password: ";
+		string password;
+		getline(cin, password);
+		cout << "Enter your salary: ";
+		double salary;
+		cin >> salary;
+		Admin* admin = new Admin(id, name, password, salary);
+		AdminManager::Register(admin);
+	}
+	static void registerEmployee() {
+		int id;
+		id = FilesHelper::getLast("EmployeeLastID.txt") + 1;
+		cin.ignore();
+		cout << "Enter your name: ";
+		string name;
+		getline(cin, name);
+		cout << "Enter your password: ";
+		string password;
+		getline(cin, password);
+		cout << "Enter your salary: ";
+		double salary;
+		cin >> salary;
+		Employee* employee = new Employee(id, name, password, salary);
+		EmployeeManager::Register(employee);
+	}
+	static void registerClient() {
+		int id;
+		id = FilesHelper::getLast("ClientLastID.txt") + 1;
+		cin.ignore();
+		cout << "Enter your name: ";
+		string name;
+		getline(cin, name);
+		cout << "Enter your password: ";
+		string password;
+		getline(cin, password);
+		cout << "Enter your balance: ";
+		double balance;
+		cin >> balance;
+		Client* client = new Client(id, name, password, balance);
+		ClientManager::Register(client);
 	}
 
 	static void loginOptions() {
@@ -53,15 +164,15 @@ public:
 			loginScreen();
 			cin >> c;
 			switch (c) {
-			//case 1:
-			//	AdminManager::login();
-			//	break;
-			//case 2:
-			//	EmployeeManager::login();
-			//	break;
-			//case 3:
-			//	ClientManager::login();
-			//	break;
+			case 1:
+				loginAdmin();
+				break;
+			case 2:
+				loginEmployee();
+				break;
+			case 3:
+				loginClient();
+				break;
 			case 4:
 				runApp();
 				break;
@@ -80,15 +191,18 @@ public:
 			registerScreen();
 			cin >> c;
 			switch (c) {
-			//case 1:
-			//	AdminManager::registerAdmin();
-			//	break;
-			//case 2:
-			//	EmployeeManager::registerEmployee();
-			//	break;
-			//case 3:
-			//	ClientManager::registerClient();
-			//	break;
+			case 1:
+				registerAdmin();
+				runApp();
+				break;
+			case 2:
+				registerEmployee();
+				runApp();
+				break;
+			case 3:
+				registerClient();
+				runApp();
+				break;
 			case 4:
 				runApp();
 				break;
@@ -113,7 +227,8 @@ public:
 				registerOptions();
 				break;
 			case 3:
-				exit();
+				quit();
+				return;
 				break;
 			default:
 				invalid(c);

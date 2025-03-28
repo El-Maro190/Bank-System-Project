@@ -16,12 +16,7 @@ public:
 	}
 
 	void setBalance(double balance) {
-		if (Validation::isValidationbalance(balance)) {
-			this->balance = balance;
-		}
-		else {
-			cout << "Invalid balance. Must be at least 1500.\n";
-		}
+		this->balance = balance;
 	}
 
 	double getBalance() {

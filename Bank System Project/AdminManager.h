@@ -27,10 +27,11 @@ public:
 		double salary;
 		cout << "Enter id: ";
 		cin >> id;
+		cin.ignore();
 		cout << "Enter name: ";
-		cin >> name;
+		getline(cin, name);
 		cout << "Enter password: ";
-		cin >> password;
+		getline(cin, password);
 		cout << "Enter salary: ";
 		cin >> salary;
 		Employee employee(id, name, password, salary);
@@ -45,7 +46,13 @@ public:
 		int id;
 		cout << "Enter the id of the employee: ";
 		cin >> id;
-		admin->searchEmployee(id);
+		Employee* employee = admin->searchEmployee(id);
+		if (employee != nullptr) {
+			employee->display();
+		}
+		else {
+			cout << "Employee not found" << endl;
+		}
 	}
 
 	static void editEmployeeInfo(Admin* admin) {
@@ -55,10 +62,11 @@ public:
 		double salary;
 		cout << "Enter the id of the employee: ";
 		cin >> id;
+		cin.ignore();
 		cout << "Enter the new name: ";
-		cin >> name;
+		getline(cin, name);
 		cout << "Enter the new password: ";
-		cin >> password;
+		getline(cin, password);
 		cout << "Enter the new salary: ";
 		cin >> salary;
 		admin->editEmployee(id, name, password, salary);
@@ -78,14 +86,21 @@ public:
 			return admin;
 		}
 		else {
-			cout << "Error: in password or id" << "\n";
 			return nullptr;
 		}
 	}
 
-	static bool AdminOptions() {
+	static void Register(Admin* admin) {
+		if (admin != nullptr) {
+			FileManager::addAdmin(*admin);
+			cout << "Admin registered successfully" << endl;
+		} else {
+			cout << "Error: Admin not registered" << endl;
+		}
+	}
+
+	static bool AdminOptions(Admin* admin) {
 		int c;
-		Admin* admin = nullptr;
 		do {
 			printAdminMenu();
 			cin >> c;
@@ -126,7 +141,7 @@ public:
 				cout << "Invalid option: " << c << endl;
 				break;
 			}
-		} while (c != 3);
+		} while (true);
 		return true;
 	}
 };

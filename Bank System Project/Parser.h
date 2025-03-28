@@ -22,12 +22,12 @@ public:
 		return result;
 	}
 
-	static Client* ParseToClient(string& line) {
+	static Client ParseToClient(string& line) {
 		vector<string> v = split(line);
 
 		if (v.size() != 4) {
 			cout << "Error: Client data is not correct. Line: " << line << endl;
-			return nullptr;
+			return Client();
 		}
 
 		int id = stoi(v[0]);
@@ -35,15 +35,15 @@ public:
 		string password = v[2];
 		double balance = stod(v[3]);
 
-		return new Client(id, name, password, balance);
+		return Client(id, name, password, balance);
 	}
 
-	static Employee* ParseToEmployee(string& line) {
+	static Employee ParseToEmployee(string& line) {
 		vector<string> v = split(line);
 
 		if (v.size() != 4) {
 			cout << "Error: Employee data is not correct. Line: " << line << endl;
-			return nullptr;
+			return Employee();
 		}
 
 		int id = stoi(v[0]);
@@ -51,15 +51,15 @@ public:
 		string password = v[2];
 		double salary = stod(v[3]);
 
-		return new Employee(id, name, password, salary);
+		return Employee(id, name, password, salary);
 	}
 
-	static Admin* ParseToAdmin(string& line) {
+	static Admin ParseToAdmin(string& line) {
 		vector<string> v = split(line);
 
 		if (v.size() != 4) {
 			cout << "Error: Admin data is not correct. Line: " << line << endl;
-			return nullptr;
+			return Admin();
 		}
 
 		int id = stoi(v[0]);
@@ -67,6 +67,6 @@ public:
 		string password = v[2];
 		double salary = stod(v[3]);
 
-		return new Admin(id, name, password, salary);
+		return Admin(id, name, password, salary);
 	}
 };

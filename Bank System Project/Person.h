@@ -17,30 +17,19 @@ public:
 
 	bool login(int id, string password) {
 		if (this->password == password && this->id == id) {
-			cout << "Logged in successfull" << "\n";
+			cout << "Logged in successfully" << "\n";
 			return true;
 		}
 		else {
-			cout << "Error: in password or id" << "\n";
 			return false;
 		}
 	}
 
 	void setName(string name) {
-		if (Validation::isValidationName(name)) {
-			this->name = name;
-		}
-		else {
-			cout << "Invalid name. Must be alphabetic and 5-20 characters.\n";
-		}
+		this->name = name;
 	}
 	void setPassword(string password) {
-		if (Validation::isValidationPassword(password)) {
-			this->password = password;
-		}
-		else {
-			cout << "Invalid password. Must be 8-20 characters.\n";
-		}
+		this->password = password;
 	}
 	void setId(int id) {
 		this->id = id;

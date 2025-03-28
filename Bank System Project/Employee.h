@@ -18,12 +18,7 @@ public:
 	}
 
 	void setSalary(double salary) {
-		if (Validation::isValidationSalary(salary)) {
-			this->salary = salary;
-		}
-		else {
-			cout << "Invalid salary. Must be at least 5000.\n";
-		}
+		this->salary = salary;
 	}
 	double getSalary() {
 		return this->salary;

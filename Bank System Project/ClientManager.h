@@ -58,9 +58,18 @@ public:
 		}
 	}
 
-	static bool clientOptions() {
+	static void Register(Client* client) {
+		if (client != nullptr) {
+			FileManager::addClient(*client);
+			cout << "Client registered successfully" << endl;
+		}
+		else {
+			cout << "Error: Client not registered" << endl;
+		}
+	}
+
+	static bool clientOptions(Client* client) {
 		int c;
-		Client* client = nullptr;
 		do {
 			printClientMenu();
 			cin >> c;
