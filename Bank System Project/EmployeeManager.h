@@ -20,8 +20,7 @@ public:
 		string name;
 		string password;
 		double balance;
-		cout << "Enter id: ";
-		cin >> id;
+		id = FilesHelper::getLast("EmployeeLastID.txt") + 1;
 		cin.ignore();
 		cout << "Enter name: ";
 		getline(cin, name);

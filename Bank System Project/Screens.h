@@ -21,7 +21,7 @@ public:
 	}
 
 	static void loginScreen() {
-		cout << "Please select an option from the following:" << endl;
+		cout << "Please select an option from the following to login as:" << endl;
 		cout << "1. Admin" << endl;
 		cout << "2. Employee" << endl;
 		cout << "3. Client" << endl;
@@ -29,7 +29,7 @@ public:
 	}
 
 	static void registerScreen() {
-		cout << "Please select an option from the following:" << endl;
+		cout << "Please select an option from the following to register as:" << endl;
 		cout << "1. Admin" << endl;
 		cout << "2. Employee" << endl;
 		cout << "3. Client" << endl;
