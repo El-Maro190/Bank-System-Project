@@ -12,7 +12,14 @@ private:
 public:
 	Client() : Person(), balance(0.0) {}
 	Client(int id, string name, string password, double balance) :
-		Person(id, name, password), balance(balance) {
+		Person(id, name, password) {
+		if (Validation::isValidationbalance(balance))
+		{
+			this->balance = balance;
+		}
+		else {
+			cout << "Invalid balance" << "\n";
+		}
 	}
 
 	void setBalance(double balance) {

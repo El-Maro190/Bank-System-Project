@@ -4,6 +4,7 @@
 #include <vector>
 #include "Person.h"
 #include "Client.h"
+#include "Validation.h"
 
 using namespace std;
 
@@ -14,7 +15,14 @@ protected:
 public:
 	Employee() : Person(), salary(0.0) {}
 	Employee(int id, string name, string password, double salary) :
-		Person(id, name, password), salary(salary) {
+		Person(id, name, password) {
+		if (Validation::isValidationSalary(salary))
+		{
+			this->salary = salary;
+		}
+		else {
+			cout << "Invalid salary" << "\n";
+		}
 	}
 
 	void setSalary(double salary) {

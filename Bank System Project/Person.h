@@ -13,7 +13,17 @@ protected:
 public:
 	Person() : id(0), name("Unknown"), password("1234") {}
 
-	Person(int id, string name, string password) :id(id), name(name), password(password) {}
+	Person(int id, string name, string password) {
+		if (Validation::isValidationName(name) && Validation::isValidationPassword(password))
+		{
+			this->id = id;
+			this->name = name;
+			this->password = password;
+		}
+		else {
+			cout << "Invalid name or password" << "\n";
+		}
+	}
 
 	bool login(int id, string password) {
 		if (this->password == password && this->id == id) {
